@@ -7,8 +7,11 @@ import androidx.room.PrimaryKey;
 @Entity
 public class Contact {
 
-    @PrimaryKey(autoGenerate = true)
+    // id, contact_username, name, server, last, lastDate, image
+    @PrimaryKey
     private int id;
+
+    private String contactUsername;
 
     private String name;
 
@@ -20,8 +23,9 @@ public class Contact {
 
     private String image;
 
-    public Contact(String name, String server, String last, String lastDate, String image) {
-
+    public Contact(int id,String contactUsername, String name, String server, String last, String lastDate, String image) {
+        this.id = id;
+        this.contactUsername = contactUsername;
         this.name = name;
         this.server = server;
         this.last = last;
@@ -31,6 +35,10 @@ public class Contact {
 
     public int getId() {
         return id;
+    }
+
+    public String getContactUsername() {
+        return contactUsername;
     }
 
     public String getName() {
@@ -53,6 +61,10 @@ public class Contact {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setContactUsername(String contactUsername) {
+        this.contactUsername = contactUsername;
     }
 
     public void setName(String name) {
@@ -78,10 +90,12 @@ public class Contact {
     public String toString() {
         return "Contact{" +
                 "id=" + id +
+                ", contactUsername='" + contactUsername + '\'' +
                 ", name='" + name + '\'' +
                 ", server='" + server + '\'' +
                 ", last='" + last + '\'' +
                 ", lastDate='" + lastDate + '\'' +
+                ", image='" + image + '\'' +
                 '}';
     }
 }

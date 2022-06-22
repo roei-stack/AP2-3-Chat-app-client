@@ -11,6 +11,7 @@ import androidx.room.Room;
 
 import com.example.ex3.R;
 import com.example.ex3.adapters.ContactsListAdapter;
+import com.example.ex3.api.ContactAPI;
 import com.example.ex3.entities.Contact;
 import com.example.ex3.room.AppDB;
 import com.example.ex3.room.ContactDao;
@@ -31,6 +32,9 @@ public class ChatsSelector extends AppCompatActivity {
         setContentView(R.layout.activity_chats_selector);
 
 
+        ContactAPI contactAPI = new ContactAPI(null, null, "bob");
+        contactAPI.get();
+
         db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "LocalDB")
                 .allowMainThreadQueries()
                 .build();
@@ -50,20 +54,7 @@ public class ChatsSelector extends AppCompatActivity {
         listContacts = findViewById(R.id.listContacts);
         listContacts.setAdapter(adapter);
         listContacts.setLayoutManager(new LinearLayoutManager(this));
-        /*
-        // connect adapter with recycler view
-        RecyclerView listContacts = findViewById(R.id.listContacts);
-        final ContactsListAdapter adapter = new ContactsListAdapter(this);
-        listContacts.setAdapter(adapter);
-        listContacts.setLayoutManager(new LinearLayoutManager(this));
 
-
-        List<Contact> lst = new ArrayList<>();
-        String myURI = Uri.parse("android.resource://com.ex3.here/drawable/image_name").toString();
-        lst.add(new Contact(1, "bob1", "server", "hi how are ya", "22/06/2022", myURI));
-
-        adapter.setContacts(lst);
-*/
     }
 
     @SuppressLint("NotifyDataSetChanged")
