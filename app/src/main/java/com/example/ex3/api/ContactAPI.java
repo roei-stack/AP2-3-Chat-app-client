@@ -37,13 +37,13 @@ public class ContactAPI {
         webServiceAPI = retrofit.create(WebServiceAPI.class);
     }
 
-    public void get() {
+    public void get(MutableLiveData<List<Contact>> contacts) {
         Call<List<Contact>> call = webServiceAPI.getContacts("bob");
         call.enqueue(new Callback<List<Contact>>() {
            @Override
            public void onResponse(@NonNull Call<List<Contact>> call, @NonNull Response<List<Contact>> response) {
 
-               List<Contact> list = response.body();
+               contacts.setValue(response.body());
                // todo add the list to dao and contactListData
                /*new Thread(() -> {
                   // dao.insert(response.body());
@@ -57,4 +57,6 @@ public class ContactAPI {
            }
         });
     }
+
+
 }
