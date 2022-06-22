@@ -16,6 +16,8 @@ public class Contact {
 
     private String lastDate;
 
+    private String image;
+
     public int getId() {
         return id;
     }
@@ -36,6 +38,8 @@ public class Contact {
         return lastDate;
     }
 
+    public String getImage() { return image; }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -55,6 +59,8 @@ public class Contact {
     public void setLastDate(String lastDate) {
         this.lastDate = lastDate;
     }
+
+    public void setImage(String image) { this.image = image; }
 
     @NonNull
     @Override
