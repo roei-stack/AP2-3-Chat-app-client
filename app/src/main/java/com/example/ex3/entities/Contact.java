@@ -1,10 +1,12 @@
 package com.example.ex3.entities;
 
 import androidx.annotation.NonNull;
+import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-//@Entity
+@Entity
 public class Contact {
+
     @PrimaryKey(autoGenerate = true)
     private int id;
 
@@ -18,8 +20,8 @@ public class Contact {
 
     private String image;
 
-    public Contact(int id, String name, String server, String last, String lastDate, String image) {
-        this.id = id;
+    public Contact(String name, String server, String last, String lastDate, String image) {
+
         this.name = name;
         this.server = server;
         this.last = last;
