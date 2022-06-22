@@ -1,5 +1,6 @@
 package com.example.ex3.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -21,7 +22,8 @@ public class LoginActivity extends AppCompatActivity {
 
         Button btn_go_register = findViewById(R.id.btn_go_register);
         btn_go_register.setOnClickListener(view -> {
-
+            Intent intent = new Intent(this, RegisterActivity.class);
+            startActivity(intent);
         });
     }
 }

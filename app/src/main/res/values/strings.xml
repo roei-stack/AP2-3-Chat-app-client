@@ -6,4 +6,11 @@
     <string name="login_btn">Login</string>
     <string name="btn_go_register_text">Don\'t have an account? Register</string>
     <string name="chat_logo_description">Chat logo</string>
+    <string name="goToLogin">Already registered? Login here</string>
+    <string name="registerBtnText">Register</string>
+    <string name="nickname_placeholder">Nickname</string>
+    <string name="confirm_password_placeholder">Confirm password</string>
+    <string name="register_title">Welcome to BorisChats</string>
+    <string name="upload_profile_picture">Upload profile picture</string>
+    <string name="image_will_be_shown_here">Image will be shown here</string>
 </resources>
