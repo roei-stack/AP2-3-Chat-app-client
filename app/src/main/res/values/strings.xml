@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">ex3</string>
+    <string name="app_name">BorisChats</string>
+    <string name="sign_in_title">Sign in to BorisChats</string>
+    <string name="username_placeholder">Username</string>
+    <string name="password_placeholder">Password</string>
+    <string name="login_btn">Login</string>
+    <string name="btn_go_register_text">Don\'t have an account? Register</string>
+    <string name="chat_logo_description">Chat logo</string>
 </resources>
