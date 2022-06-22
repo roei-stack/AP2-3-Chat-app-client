@@ -18,6 +18,15 @@ public class Contact {
 
     private String image;
 
+    public Contact(int id, String name, String server, String last, String lastDate, String image) {
+        this.id = id;
+        this.name = name;
+        this.server = server;
+        this.last = last;
+        this.lastDate = lastDate;
+        this.image = image;
+    }
+
     public int getId() {
         return id;
     }

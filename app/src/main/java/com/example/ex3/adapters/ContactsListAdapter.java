@@ -65,4 +65,9 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
         if (contacts == null) { return 0; }
         return contacts.size();
     }
+
+    public void setContacts(List<Contact> contacts) {
+        this.contacts = contacts;
+        notifyDataSetChanged();
+    }
 }
