@@ -54,7 +54,7 @@ public class ChatsSelector extends AppCompatActivity {
 
         FloatingActionButton floatingActionButtonAdd = findViewById(R.id.floatingActionButtonAdd);
         floatingActionButtonAdd.setOnClickListener(view -> {
-            viewModel.add(new Contact("h", "roei", "lmfao", "hi how are ya?", "2222-22-22T15:59:00", "v"));
+            viewModel.add(new Contact("h", "roei", "lmfao", "hi how are ya?", "2222-22-22T15:59:00"));
         });
     }
 

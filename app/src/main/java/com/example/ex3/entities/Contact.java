@@ -26,10 +26,10 @@ public class Contact {
 
     private String lastdate; // the last message's time
 
-    private String image; // his profile picture
+  //  private String image; // his profile picture
 
     @SuppressLint("SimpleDateFormat")
-    public Contact(@NonNull String id, String name, String server, String last, String lastdate, String image) {
+    public Contact(@NonNull String id, String name, String server, String last, String lastdate) {
         this.id = id;
         this.name = name;
         this.server = server;
@@ -46,7 +46,7 @@ public class Contact {
             e.printStackTrace();
         }
 
-        this.image = image;
+    //    this.image = image;
     }
 
     @NonNull
@@ -70,7 +70,7 @@ public class Contact {
         return lastdate;
     }
 
-    public String getImage() { return image; }
+ /*   public String getImage() { return image; }*/
 
     public void setId(@NonNull String id) {
         this.id = id;
@@ -92,7 +92,7 @@ public class Contact {
         this.lastdate = lastDate;
     }
 
-    public void setImage(String image) { this.image = image; }
+  /*  public void setImage(String image) { this.image = image; }*/
 
     @NonNull
     @Override
@@ -103,7 +103,6 @@ public class Contact {
                 ", server='" + server + '\'' +
                 ", last='" + last + '\'' +
                 ", lastDate='" + lastdate + '\'' +
-                ", image='" + image + '\'' +
                 '}';
     }
 }

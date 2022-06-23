@@ -1,5 +1,6 @@
 package com.example.ex3.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,6 +66,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
         return contacts.size();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setContacts(List<Contact> contacts) {
         this.contacts = contacts;
         notifyDataSetChanged();

@@ -1,6 +1,7 @@
 package com.example.ex3.api;
 
 import com.example.ex3.entities.Contact;
+import com.example.ex3.entities.ContactDetails;
 
 import java.util.List;
 
@@ -13,12 +14,12 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface WebServiceAPI {
-    @GET("contacts")
+    @GET("api/contacts")
     Call<List<Contact>> getContacts(@Query("username") String username);
 
-    @POST("contacts")
-    Call<Void> createContact(@Query("username") String username, @Body Contact contact);
+    @POST("api/contacts")
+    Call<Void> createContact(@Query("username") String username, @Body ContactDetails contact);
 
-    @DELETE("contacts/{id}")
+    @DELETE("api/contacts/{id}")
     Call<Void> deleteContact(@Query("username") String username, @Path("id") int id);
 }

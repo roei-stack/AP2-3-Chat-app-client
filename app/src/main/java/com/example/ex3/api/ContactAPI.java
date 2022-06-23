@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.ex3.App;
 import com.example.ex3.R;
 import com.example.ex3.entities.Contact;
+import com.example.ex3.entities.ContactDetails;
 import com.example.ex3.room.ContactDao;
 
 import java.util.List;
@@ -59,7 +60,10 @@ public class ContactAPI {
 
 
     public void add(Contact contact) {
-        Call<Void> call = webServiceAPI.createContact(username, contact);
+        Call<Void> call = webServiceAPI.createContact(username, new ContactDetails(
+                contact.getId(), contact.getName(), App.CONTEXT.getString(R.string.BaseLocalUrl)
+        ));
+
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
@@ -74,6 +78,7 @@ public class ContactAPI {
 
             @Override
             public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                // a common reason for timeouts is that the user has given an invalid server
                 Log.e("Fetch failed", t.toString());
             }
         });
