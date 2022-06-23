@@ -15,4 +15,5 @@
     <string name="image_will_be_shown_here">Image will be shown here</string>
     <string name="profile_img_description">Profile img</string>
     <string name="BaseUrl">http://10.0.2.2:7007/api/</string>
+    <string name="add_new_contact">Add new contact</string>
 </resources>

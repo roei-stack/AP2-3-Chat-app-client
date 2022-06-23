@@ -37,18 +37,17 @@ public class ContactAPI {
         webServiceAPI = retrofit.create(WebServiceAPI.class);
     }
 
-    public void get(MutableLiveData<List<Contact>> contacts) {
-        Call<List<Contact>> call = webServiceAPI.getContacts("bob");
+    public void get() {
+        Call<List<Contact>> call = webServiceAPI.getContacts(username);
         call.enqueue(new Callback<List<Contact>>() {
            @Override
            public void onResponse(@NonNull Call<List<Contact>> call, @NonNull Response<List<Contact>> response) {
-
-               contacts.setValue(response.body());
-               // todo add the list to dao and contactListData
-               /*new Thread(() -> {
-                  // dao.insert(response.body());
+               //contacts.setValue(response.body());
+               new Thread(() -> {
+                   dao.clear();
+                   dao.insertList(response.body());
                    contactListData.postValue(dao.index());
-               }).start();*/
+               }).start();
            }
 
            @Override
@@ -59,4 +58,24 @@ public class ContactAPI {
     }
 
 
+    public void add(Contact contact) {
+        Call<Void> call = webServiceAPI.createContact(username, contact);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                if (!response.isSuccessful()) {
+                    return;
+                }
+                new Thread(() -> {
+                    dao.insert(contact);
+                    contactListData.postValue(dao.index());
+                }).start();
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                Log.e("Fetch failed", t.toString());
+            }
+        });
+    }
 }

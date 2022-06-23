@@ -21,9 +21,9 @@ public class ContactsViewModel extends ViewModel {
 
     public LiveData<List<Contact>> get() { return contacts; }
 
-/*    public void add(Contact c) { repository.add(c); }
+    public void add(Contact c) { repository.add(c); }
 
-    public void delete(Contact c) { repository.delete(c); }
+   // public void delete(Contact c) { repository.delete(c); }
 
-    public void reload() { repository.reload(); }*/
+    public void reload() { repository.reload(); }
 }

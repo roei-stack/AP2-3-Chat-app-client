@@ -13,13 +13,12 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface WebServiceAPI {
-
     @GET("contacts")
     Call<List<Contact>> getContacts(@Query("username") String username);
 
     @POST("contacts")
-    Call<Void> createContact(String username, @Body Contact contact);
+    Call<Void> createContact(@Query("username") String username, @Body Contact contact);
 
     @DELETE("contacts/{id}")
-    Call<Void> deleteContact(String username, @Path("id") int id);
+    Call<Void> deleteContact(@Query("username") String username, @Path("id") int id);
 }

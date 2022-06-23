@@ -1,44 +1,57 @@
 package com.example.ex3.entities;
 
+import android.annotation.SuppressLint;
+
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Objects;
 
 @Entity
 public class Contact {
 
     // id, contact_username, name, server, last, lastDate, image
+    @NonNull
     @PrimaryKey
-    private int id;
+    private String id; // his username
 
-    private String contactUsername;
+    private String name; // his nickname
 
-    private String name;
+    private String server; // his server
 
-    private String server;
+    private String last; // last message in chat
 
-    private String last;
+    private String lastdate; // the last message's time
 
-    private String lastDate;
+    private String image; // his profile picture
 
-    private String image;
-
-    public Contact(int id,String contactUsername, String name, String server, String last, String lastDate, String image) {
+    @SuppressLint("SimpleDateFormat")
+    public Contact(@NonNull String id, String name, String server, String last, String lastdate, String image) {
         this.id = id;
-        this.contactUsername = contactUsername;
         this.name = name;
         this.server = server;
         this.last = last;
-        this.lastDate = lastDate;
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+            Date date = Objects.requireNonNull(
+                    new SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
+                    .parse(lastdate.substring(0, 10) + ' '
+                            + lastdate.substring(11)));
+            this.lastdate = dateFormat.format(date);
+        } catch (Exception e) {
+            this.lastdate = "";
+            e.printStackTrace();
+        }
+
         this.image = image;
     }
 
-    public int getId() {
+    @NonNull
+    public String getId() {
         return id;
-    }
-
-    public String getContactUsername() {
-        return contactUsername;
     }
 
     public String getName() {
@@ -53,18 +66,14 @@ public class Contact {
         return last;
     }
 
-    public String getLastDate() {
-        return lastDate;
+    public String getLastdate() {
+        return lastdate;
     }
 
     public String getImage() { return image; }
 
-    public void setId(int id) {
+    public void setId(@NonNull String id) {
         this.id = id;
-    }
-
-    public void setContactUsername(String contactUsername) {
-        this.contactUsername = contactUsername;
     }
 
     public void setName(String name) {
@@ -79,8 +88,8 @@ public class Contact {
         this.last = last;
     }
 
-    public void setLastDate(String lastDate) {
-        this.lastDate = lastDate;
+    public void setLastdate(String lastDate) {
+        this.lastdate = lastDate;
     }
 
     public void setImage(String image) { this.image = image; }
@@ -89,12 +98,11 @@ public class Contact {
     @Override
     public String toString() {
         return "Contact{" +
-                "id=" + id +
-                ", contactUsername='" + contactUsername + '\'' +
+                "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", server='" + server + '\'' +
                 ", last='" + last + '\'' +
-                ", lastDate='" + lastDate + '\'' +
+                ", lastDate='" + lastdate + '\'' +
                 ", image='" + image + '\'' +
                 '}';
     }

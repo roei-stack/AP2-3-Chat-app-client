@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.ex3.R;
 import com.example.ex3.adapters.ContactsListAdapter;
@@ -15,6 +16,7 @@ import com.example.ex3.entities.Contact;
 import com.example.ex3.room.AppDB;
 import com.example.ex3.room.ContactDao;
 import com.example.ex3.viewmodels.ContactsViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -25,7 +27,7 @@ public class ChatsSelector extends AppCompatActivity {
     private ContactDao contactDao;
     private List<Contact> contacts;
     private ContactsListAdapter adapter;
-    private RecyclerView listContacts;
+    private RecyclerView listContactsView;
     private ContactsViewModel viewModel;
 
     @Override
@@ -35,15 +37,25 @@ public class ChatsSelector extends AppCompatActivity {
 
         viewModel = new ViewModelProvider(this).get(ContactsViewModel.class);
 
-
-        listContacts = findViewById(R.id.listContacts);
+        listContactsView = findViewById(R.id.listContacts);
         adapter = new ContactsListAdapter(this);
-        listContacts.setAdapter(adapter);
-        listContacts.setLayoutManager(new LinearLayoutManager(this));
+        listContactsView.setAdapter(adapter);
+        listContactsView.setLayoutManager(new LinearLayoutManager(this));
 
-        // whenever the list changes we will modify the adapter
+        // when user refreshes, reload the viewModel
+        SwipeRefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
+        refreshLayout.setOnRefreshListener(() -> viewModel.reload());
 
-        viewModel.get().observe(this, contacts -> adapter.setContacts(contacts));
+        // whenever the list changes we will modify the adapter, and stop refreshing
+        viewModel.get().observe(this, contacts -> {
+            adapter.setContacts(contacts);
+            refreshLayout.setRefreshing(false);
+        });
+
+        FloatingActionButton floatingActionButtonAdd = findViewById(R.id.floatingActionButtonAdd);
+        floatingActionButtonAdd.setOnClickListener(view -> {
+            viewModel.add(new Contact("h", "roei", "lmfao", "hi how are ya?", "2222-22-22T15:59:00", "v"));
+        });
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -52,7 +64,7 @@ public class ChatsSelector extends AppCompatActivity {
         super.onResume();
         //contacts.clear();
         //contacts.addAll(contactDao.index());
-        adapter.notifyDataSetChanged();
+       // adapter.notifyDataSetChanged();
     }
 }
 

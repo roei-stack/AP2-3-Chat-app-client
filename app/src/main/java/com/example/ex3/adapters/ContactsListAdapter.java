@@ -1,7 +1,6 @@
 package com.example.ex3.adapters;
 
 import android.content.Context;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,8 +55,8 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
         final Contact current = contacts.get(position);
         holder.tvNickname.setText(current.getName());
         holder.tvLastMessage.setText(current.getLast());
-        holder.tvLastDate.setText(current.getLastDate());
-        holder.contactImg.setImageURI(Uri.parse(current.getImage()));
+        holder.tvLastDate.setText(current.getLastdate());
+        //holder.contactImg.setImageURI(Uri.parse(current.getImage()));
     }
 
     @Override

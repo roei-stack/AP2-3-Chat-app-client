@@ -3,8 +3,10 @@ package com.example.ex3.repositories;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.ex3.App;
 import com.example.ex3.api.ContactAPI;
 import com.example.ex3.entities.Contact;
+import com.example.ex3.room.AppDB;
 import com.example.ex3.room.ContactDao;
 
 import java.util.ArrayList;
@@ -17,29 +19,24 @@ public class ContactsRepository {
     private ContactAPI api;
 
     public ContactsRepository() {
-        //LocalDatabase db = LocalDatabase.getInstance();
-        // dao = db.contactsDao();
+        AppDB db = App.DB;
+        dao = db.contactDao();
         contactListData = new ContactListData();
-        //api = new ContactAPI(contactListData, dao, "bob");
+        api = new ContactAPI(contactListData, dao, "bob");
     }
 
     class ContactListData extends MutableLiveData<List<Contact>> {
         public ContactListData() {
             super();
-
-            ArrayList<Contact> x = new ArrayList<>();
-
-            x.add(new Contact(1, "bbb", "name", "xxxx", "hi how are ya", "01/01/0001", "x"));
-
-            setValue(x);
+            setValue(new ArrayList<>());
         }
 
         @Override
         protected void onActive() {
             super.onActive();
-            //new Thread(() -> contactListData.postValue(dao.index())).start();
-            ContactAPI contactAPI = new ContactAPI(null, null, "bob");
-            contactAPI.get(this);
+            new Thread(() -> contactListData.postValue(dao.index())).start();
+            // asynchronously retrieve data
+            api.get();
         }
     }
 
@@ -47,15 +44,18 @@ public class ContactsRepository {
         return contactListData;
     }
 
-  /*  public void add(final Contact contact) {
+
+    public void add(final Contact contact) {
         api.add(contact);
     }
 
+    /*
+
     public void delete(final Contact contact) {
         api.delete(contact);
-    }
+    }*/
 
     public void reload() {
-        api.get(this);
-    }*/
+        api.get();
+    }
 }
