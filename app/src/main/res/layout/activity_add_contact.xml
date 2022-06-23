@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.AddContactActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.409" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_a_new_contact"
+            android:textAlignment="center"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="35sp" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/usernameContact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:hint="@string/contact_s_username"
+            android:maxLines="1"
+            android:minHeight="48dp"
+            android:textColor="@color/black"
+            android:textColorHint="#757575" />
+
+        <TextView
+            android:id="@+id/tvErrUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="@android:color/holo_red_light" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/nicknameContact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:hint="@string/choose_a_nickname"
+            android:maxLines="2"
+            android:minHeight="48dp"
+            android:textColor="@color/black"
+            android:textColorHint="#757575" />
+
+        <TextView
+            android:id="@+id/tvErrNickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="@android:color/holo_red_light" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/serverContact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="@string/BaseUrl"
+            android:maxLines="2"
+            android:minHeight="48dp"
+            android:textColor="@color/black"
+            android:textColorHint="#757575" />
+
+        <TextView
+            android:id="@+id/tvErrServer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="@android:color/holo_red_light" />
+
+        <Button
+            android:id="@+id/btnSaveNewContact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawableLeft="@android:drawable/ic_input_add"
+            android:drawableRight="@android:drawable/ic_input_add"
+            android:text="@string/button_add_contact"
+            tools:ignore="RtlHardcoded" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

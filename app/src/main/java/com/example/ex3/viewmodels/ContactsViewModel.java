@@ -6,9 +6,10 @@ import androidx.lifecycle.ViewModel;
 import com.example.ex3.entities.Contact;
 import com.example.ex3.repositories.ContactsRepository;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class ContactsViewModel extends ViewModel {
+public class ContactsViewModel extends ViewModel implements Serializable {
 
     private final ContactsRepository repository;
 
@@ -21,7 +22,7 @@ public class ContactsViewModel extends ViewModel {
 
     public LiveData<List<Contact>> get() { return contacts; }
 
-    public void add(Contact c) { repository.add(c); }
+    public void add(Contact c) throws Exception { repository.add(c); }
 
    // public void delete(Contact c) { repository.delete(c); }
 

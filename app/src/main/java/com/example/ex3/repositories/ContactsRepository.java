@@ -22,7 +22,7 @@ public class ContactsRepository {
         AppDB db = App.DB;
         dao = db.contactDao();
         contactListData = new ContactListData();
-        api = new ContactAPI(contactListData, dao, "bob");
+        api = new ContactAPI(contactListData, dao);
     }
 
     class ContactListData extends MutableLiveData<List<Contact>> {
@@ -45,7 +45,7 @@ public class ContactsRepository {
     }
 
 
-    public void add(final Contact contact) {
+    public void add(final Contact contact) throws Exception {
         api.add(contact);
     }
 

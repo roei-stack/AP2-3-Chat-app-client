@@ -17,4 +17,12 @@
     <string name="BaseUrl">http://10.0.2.2:7007/</string>
     <string name="BaseLocalUrl">http://localhost:7007/</string>
     <string name="add_new_contact">Add new contact</string>
+    <string name="add_a_new_contact">Add a new contact</string>
+    <string name="contact_s_username">Contact\'s username</string>
+    <string name="choose_a_nickname">Choose a nickname</string>
+    <string name="button_add_contact">Save</string>
+    <string name="errEmptyContactUsername">Please enter a username</string>
+    <string name="errContactUsernameIsUsername">\?No friends?</string>
+    <string name="errEmptyContactNickname">Please enter a nickname</string>
+    <string name="emptyServerErr">\"Choose a server, maybe \"</string>
 </resources>

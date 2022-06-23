@@ -26,10 +26,10 @@ public class ContactAPI {
     WebServiceAPI webServiceAPI;
     String username;
 
-    public ContactAPI(MutableLiveData<List<Contact>> contactListData, ContactDao dao, String username) {
+    public ContactAPI(MutableLiveData<List<Contact>> contactListData, ContactDao dao) {
         this.contactListData = contactListData;
         this.dao = dao;
-        this.username = username;
+        this.username = App.USERNAME;
         retrofit = new Retrofit.Builder()
                 .baseUrl(App.CONTEXT.getString(R.string.BaseUrl))
                 .addConverterFactory(GsonConverterFactory.create())
@@ -60,8 +60,15 @@ public class ContactAPI {
 
 
     public void add(Contact contact) {
+        if (dao.get(contact.getId()) != null) {
+            return;
+        }
+
+        if (contact.getServer().equals(App.CONTEXT.getString(R.string.BaseUrl))) {
+            contact.setServer(App.CONTEXT.getString(R.string.BaseLocalUrl));
+        }
         Call<Void> call = webServiceAPI.createContact(username, new ContactDetails(
-                contact.getId(), contact.getName(), App.CONTEXT.getString(R.string.BaseLocalUrl)
+                contact.getId(), contact.getName(), contact.getServer()
         ));
 
         call.enqueue(new Callback<Void>() {

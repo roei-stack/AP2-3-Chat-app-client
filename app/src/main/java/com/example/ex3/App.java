@@ -12,6 +12,7 @@ public class App extends Application {
     @SuppressLint("StaticFieldLeak")
     public static Context CONTEXT;
     public static AppDB DB;
+    public static String USERNAME;
 
     @Override
     public void onCreate() {

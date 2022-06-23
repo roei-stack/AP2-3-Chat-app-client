@@ -6,6 +6,7 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.ex3.App;
 import com.example.ex3.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -20,6 +21,7 @@ public class LoginActivity extends AppCompatActivity {
         btn_login.setOnClickListener(view -> {
             // ...validations...
             Intent intent = new Intent(this, ChatsSelector.class);
+            App.USERNAME = "bob";
             startActivity(intent);
         });
 

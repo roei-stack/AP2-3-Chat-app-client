@@ -2,6 +2,7 @@ package com.example.ex3.activities;
 
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,6 +30,7 @@ public class ChatsSelector extends AppCompatActivity {
     private ContactsListAdapter adapter;
     private RecyclerView listContactsView;
     private ContactsViewModel viewModel;
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +55,11 @@ public class ChatsSelector extends AppCompatActivity {
         });
 
         FloatingActionButton floatingActionButtonAdd = findViewById(R.id.floatingActionButtonAdd);
-        floatingActionButtonAdd.setOnClickListener(view -> {
-            viewModel.add(new Contact("h", "roei", "lmfao", "hi how are ya?", "2222-22-22T15:59:00"));
-        });
+        floatingActionButtonAdd.setOnClickListener(view ->
+            startActivity(new Intent(this, AddContactActivity.class))
+        );
+
+
     }
 
     @SuppressLint("NotifyDataSetChanged")
