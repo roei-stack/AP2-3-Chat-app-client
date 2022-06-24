@@ -85,7 +85,7 @@ public class ContactAPI {
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
                 if (!response.isSuccessful()) {
                     Toast.makeText(App.CONTEXT,
-                                "Operation failed, make sure the server is valid",
+                                "Operation failed, make sure the server and username are valid",
                                 Toast.LENGTH_LONG)
                         .show();
                     return;
