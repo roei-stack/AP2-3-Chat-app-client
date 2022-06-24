@@ -44,13 +44,13 @@ public class ContactAPI {
         call.enqueue(new Callback<List<Contact>>() {
            @Override
            public void onResponse(@NonNull Call<List<Contact>> call, @NonNull Response<List<Contact>> response) {
+               /*
                if (!response.isSuccessful()) {
                    Toast.makeText(App.CONTEXT, "The server could not find this user"
                                    , Toast.LENGTH_LONG).show();
-                   try { Thread.sleep(1000); } catch (InterruptedException ignored) {}
                    System.exit(0);
                    return;
-               }
+               }*/
                //contacts.setValue(response.body());
                new Thread(() -> {
                    dao.clear();
@@ -94,8 +94,6 @@ public class ContactAPI {
                     dao.insert(new Contact(contact.getId(), contact.getName(), contact.getServer(),
                             null, null));
                     contactListData.postValue(dao.index());
-                    Toast.makeText(App.CONTEXT, "Contact added successfully"
-                                    , Toast.LENGTH_SHORT).show();
                 }).start();
             }
 
