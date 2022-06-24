@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "685279683096",
+    "project_id": "ex3---borischats",
+    "storage_bucket": "ex3---borischats.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:685279683096:android:a5347cb892032f1902996d",
+        "android_client_info": {
+          "package_name": "com.example.ex3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "685279683096-2h7u81b94gja3ch6k6rttns5audp94nh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzpLDyZ6GU08c4BzfI0zOnW9FjS7blgdg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "685279683096-2h7u81b94gja3ch6k6rttns5audp94nh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
