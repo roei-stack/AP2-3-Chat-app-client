@@ -26,4 +26,7 @@ public interface WebServiceAPI {
 
     @POST("api/Users/Signup")
     Call<Void> registerUser(@Body UserDetails userDetails);
+
+    @POST("api/Users/Login")
+    Call<Void> loginUser(@Body UserDetails userDetails);
 }

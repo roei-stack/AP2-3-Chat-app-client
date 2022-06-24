@@ -6,21 +6,40 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.ex3.App;
 import com.example.ex3.R;
+import com.example.ex3.api.WebServiceAPI;
+import com.example.ex3.entities.UserDetails;
 import com.google.android.material.textfield.TextInputEditText;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class RegisterActivity extends AppCompatActivity {
+
+    private WebServiceAPI webServiceAPI;
+    private TextView tvErrRegisterUsername;
+    private TextView tvErrRegisterPassword;
+    private TextView tvErrRegisterPasswordConfirm;
+    Button btn_register;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        // SETUP go to register button
+        findViewById(R.id.btn_go_register).setOnClickListener(this::goToLogin);
 
         // SETUP image upload
         ImageView user_image = findViewById(R.id.user_image);
@@ -35,55 +54,79 @@ public class RegisterActivity extends AppCompatActivity {
         TextInputEditText login_password = findViewById(R.id.login_password);
         TextInputEditText password_confirm = findViewById(R.id.password_confirm);
 
-        TextView tvErrRegisterUsername = findViewById(R.id.tvErrRegisterUsername);
-        TextView tvErrRegisterNickname = findViewById(R.id.tvErrRegisterNickname);
-        TextView tvErrRegisterPassword = findViewById(R.id.tvErrRegisterPassword);
-        TextView tvErrRegisterPasswordConfirm = findViewById(R.id.tvErrRegisterPasswordConfirm);
+        tvErrRegisterUsername = findViewById(R.id.tvErrRegisterUsername);
+        tvErrRegisterPassword = findViewById(R.id.tvErrRegisterPassword);
+        tvErrRegisterPasswordConfirm = findViewById(R.id.tvErrRegisterPasswordConfirm);
 
-        // SETUP go to register button
-        findViewById(R.id.btn_go_register).setOnClickListener(this::goToLogin);
+        webServiceAPI = new Retrofit.Builder()
+                .baseUrl(App.CONTEXT.getString(R.string.BaseUrl))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build().create(WebServiceAPI.class);
 
-        Button btnRegister = findViewById(R.id.btn_register);
-        btnRegister.setOnClickListener(v -> {
-            // client side validations
-            boolean error = false;
-
+        btn_register = findViewById(R.id.btn_register);
+        btn_register.setOnClickListener(v -> {
             String username = login_username.getEditableText().toString();
             String nick = nickname.getEditableText().toString();
             String password = login_password.getEditableText().toString();
             String password_conf = password_confirm.getEditableText().toString();
 
-            if (username.isEmpty()) {
-                error = true;
-                tvErrRegisterUsername.setText(R.string.errEmptyUsername);
-            } else {
-                tvErrRegisterUsername.setText("");
-            }
-
             if (nick.isEmpty()) {
                 nick = username;
             }
 
-            if (password.isEmpty() || !password.matches(".*[a-zA-Z]+.*")
-                    || !password.matches(".*\\d.*")) {
-                error = true;
-                tvErrRegisterPassword.setText(R.string.errInvalidPassword);
-            } else {
-                tvErrRegisterPassword.setText("");
+            if (clientSideValidations(username, nick, password, password_conf)) {
+                attemptRegister(v, new UserDetails(username, password, nick));
+            }
+        });
+    }
+
+    private boolean clientSideValidations(String username, String nick,
+                                          String password, String password_conf) {
+        boolean error = false;
+        if (username.isEmpty()) {
+            error = true;
+            tvErrRegisterUsername.setText(R.string.errEmptyUsername);
+        } else {
+            tvErrRegisterUsername.setText("");
+        }
+
+        if (password.isEmpty() || !password.matches(".*[a-zA-Z]+.*")
+                || !password.matches(".*\\d.*")) {
+            error = true;
+            tvErrRegisterPassword.setText(R.string.errInvalidPassword);
+        } else {
+            tvErrRegisterPassword.setText("");
+        }
+
+        if (!password_conf.equals(password)) {
+            error = true;
+            tvErrRegisterPasswordConfirm.setText(R.string.errPassConfirm);
+        } else {
+            tvErrRegisterPasswordConfirm.setText("");
+        }
+        return !error;
+    }
+
+    private void attemptRegister(View v, UserDetails userDetails) {
+        Call<Void> call = webServiceAPI.registerUser(userDetails);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(App.CONTEXT, "This username already exists"
+                            , Toast.LENGTH_LONG).show();
+
+                } else {
+                    // go to login page
+                    goToLogin(v);
+                }
             }
 
-            if (!password_conf.equals(password)) {
-                error = true;
-                tvErrRegisterPasswordConfirm.setText(R.string.errPassConfirm);
-            } else {
-                tvErrRegisterPasswordConfirm.setText("");
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                Toast.makeText(App.CONTEXT, "Connection tim out, try again later"
+                        , Toast.LENGTH_LONG).show();
             }
-
-            if (!error) {
-                // todo attempt register
-
-            }
-            //sorry, wrong username/password
         });
     }
 
