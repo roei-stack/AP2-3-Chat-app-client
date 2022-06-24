@@ -81,6 +81,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             if (!error) {
                 // todo attempt register
+
             }
             //sorry, wrong username/password
         });

@@ -2,6 +2,7 @@ package com.example.ex3.api;
 
 import com.example.ex3.entities.Contact;
 import com.example.ex3.entities.ContactDetails;
+import com.example.ex3.entities.UserDetails;
 
 import java.util.List;
 
@@ -22,4 +23,7 @@ public interface WebServiceAPI {
 
     @DELETE("api/contacts/{id}")
     Call<Void> deleteContact(@Query("username") String username, @Path("id") int id);
+
+    @POST("api/Users/Signup")
+    Call<Void> registerUser(@Body UserDetails userDetails);
 }
