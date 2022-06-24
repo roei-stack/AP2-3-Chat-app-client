@@ -65,7 +65,6 @@ public class ChatsSelector extends AppCompatActivity {
         );
     }
 
-
     @SuppressLint("NotifyDataSetChanged")
     @Override
     protected void onResume() {
