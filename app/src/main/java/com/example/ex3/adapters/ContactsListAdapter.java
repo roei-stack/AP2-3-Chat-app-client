@@ -6,11 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.ex3.App;
 import com.example.ex3.R;
 import com.example.ex3.entities.Contact;
 
@@ -24,6 +26,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
         private final TextView tvLastMessage;
         private final TextView tvLastDate;
         private final ImageView contactImg;
+        private final LinearLayout topLayout;
 
         public ContactsViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -31,6 +34,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
             tvLastMessage = itemView.findViewById(R.id.tvLastMessage);
             tvLastDate = itemView.findViewById(R.id.tvLastDate);
             contactImg = itemView.findViewById(R.id.contactImg);
+            topLayout = itemView.findViewById(R.id.topLayout);
         }
     }
 
@@ -58,6 +62,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
         holder.tvLastMessage.setText(current.getLast());
         holder.tvLastDate.setText(current.getLastdate());
         //holder.contactImg.setImageURI(Uri.parse(current.getImage()));
+        holder.topLayout.setOnClickListener(view -> App.ACTIVE_CONTACT.setValue(current));
     }
 
     @Override

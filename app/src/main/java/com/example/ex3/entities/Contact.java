@@ -6,12 +6,13 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
 @Entity
-public class Contact {
+public class Contact implements Serializable {
 
     // id, contact_username, name, server, last, lastDate, image
     @NonNull

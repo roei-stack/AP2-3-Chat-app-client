@@ -2,6 +2,7 @@ package com.example.ex3.api;
 
 import com.example.ex3.entities.Contact;
 import com.example.ex3.entities.ContactDetails;
+import com.example.ex3.entities.MessageDetails;
 import com.example.ex3.entities.UserDetails;
 
 import java.util.List;
@@ -29,4 +30,13 @@ public interface WebServiceAPI {
 
     @POST("api/Users/Login")
     Call<Void> loginUser(@Body UserDetails userDetails);
+
+    @GET("api/contacts/{id}/messages")
+    Call<List<MessageDetails>> getMessages(@Query("username") String username,
+                                           @Path("id") String id);
+
+    @POST("api/contacts/{id}/messages")
+    Call<Void> postMessage(@Query("username") String username
+            , @Path("id") String id
+            , @Body String data);
 }

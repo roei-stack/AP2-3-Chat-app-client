@@ -11,6 +11,7 @@ import com.example.ex3.room.MessageDao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MessagesRepository {
     private MessageDao dao;
@@ -36,7 +37,8 @@ public class MessagesRepository {
             super.onActive();
             new Thread(() -> messageListData.postValue(dao.index())).start();
             // asynchronously retrieve data
-            api.get();
+            assert App.ACTIVE_CONTACT != null;
+            api.get(Objects.requireNonNull(App.ACTIVE_CONTACT.getValue()));
         }
     }
 
@@ -56,6 +58,7 @@ public class MessagesRepository {
     }*/
 
     public void reload() {
-        api.get();
+        assert App.ACTIVE_CONTACT != null;
+        api.get(Objects.requireNonNull(App.ACTIVE_CONTACT.getValue()));
     }
 }

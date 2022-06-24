@@ -1,13 +1,9 @@
 package com.example.ex3.entities;
 
 import androidx.annotation.NonNull;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 
-@Entity
-public class Message {
+public class MessageDetails {
 
-    @PrimaryKey
     private int id;
 
     private String content;
@@ -16,14 +12,11 @@ public class Message {
 
     private String created;
 
-    private String contactId;
-
-    public Message(int id, String content, boolean sent, String created, String contactId) {
+    public MessageDetails(int id, String content, boolean sent, String created) {
         this.id = id;
         this.content = content;
         this.sent = sent;
         this.created = created;
-        this.contactId = contactId;
     }
 
     public int getId() {
@@ -42,10 +35,6 @@ public class Message {
         return created;
     }
 
-    public String getContactId() {
-        return contactId;
-    }
-
     public void setId(int id) {
         this.id = id;
     }
@@ -62,19 +51,14 @@ public class Message {
         this.created = created;
     }
 
-    public void setContactId(String contactId) {
-        this.contactId = contactId;
-    }
-
     @NonNull
     @Override
     public String toString() {
-        return "Message{" +
+        return "MessageDetails{" +
                 "id=" + id +
                 ", content='" + content + '\'' +
                 ", sent=" + sent +
                 ", created='" + created + '\'' +
-                ", contactId=" + contactId +
                 '}';
     }
 }

@@ -63,7 +63,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
 
     // Inflates the appropriate layout according to the ViewType.
     @Override
-    public MessageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
         if (viewType == 1) {
             view = mInflater.inflate(R.layout.sender_me, parent, false);

@@ -1,7 +1,6 @@
 package com.example.ex3.activities;
 
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -11,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.ex3.App;
 import com.example.ex3.R;
 import com.example.ex3.adapters.ContactsListAdapter;
 import com.example.ex3.entities.Contact;
@@ -31,7 +31,6 @@ public class ChatsSelector extends AppCompatActivity {
     private ContactsListAdapter adapter;
     private RecyclerView listContactsView;
     private ContactsViewModel viewModel;
-    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +38,8 @@ public class ChatsSelector extends AppCompatActivity {
         setContentView(R.layout.activity_chats_selector);
 
         viewModel = new ViewModelProvider(this).get(ContactsViewModel.class);
+
+        App.ACTIVE_CONTACT.observe(this, this::goToChat);
 
         if (getIntent().getExtras() != null) {
             viewModel.add((ContactDetails) getIntent().getExtras().get("contactToAdd"));
@@ -65,13 +66,10 @@ public class ChatsSelector extends AppCompatActivity {
         );
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //contacts.clear();
-        //contacts.addAll(contactDao.index());
-       // adapter.notifyDataSetChanged();
+    private void goToChat(Contact contact) {
+        startActivity(new Intent(this, MessageListActivity.class)
+                .putExtra("contact", contact)
+        );
     }
 }
 

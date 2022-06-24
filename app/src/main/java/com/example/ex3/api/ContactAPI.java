@@ -62,7 +62,7 @@ public class ContactAPI {
            @Override
             public void onFailure(@NonNull Call<List<Contact>> call, @NonNull Throwable t) {
                Log.e("Fetch failed", t.toString());
-               Toast.makeText(App.CONTEXT, "Server timed out "
+               Toast.makeText(App.CONTEXT, "Server timed out"
                        , Toast.LENGTH_LONG).show();
            }
         });
