@@ -25,4 +25,5 @@
     <string name="errContactUsernameIsUsername">\?No friends?</string>
     <string name="errEmptyContactNickname">Please enter a nickname</string>
     <string name="emptyServerErr">\"Choose a server, maybe \"</string>
+    <string name="enter_message">Enter Message</string>
 </resources>

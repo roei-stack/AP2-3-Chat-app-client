@@ -18,6 +18,16 @@ public class Message {
 
     private int contactId;
 
+    public Message() {}
+
+    public Message(int id, String content, boolean sent, String created, int contactId) {
+        this.id = id;
+        this.content = content;
+        this.sent = sent;
+        this.created = created;
+        this.contactId = contactId;
+    }
+
     public int getId() {
         return id;
     }
