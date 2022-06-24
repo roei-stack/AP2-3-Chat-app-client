@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.ex3.App;
 import com.example.ex3.api.ContactAPI;
 import com.example.ex3.entities.Contact;
+import com.example.ex3.entities.ContactDetails;
 import com.example.ex3.room.AppDB;
 import com.example.ex3.room.ContactDao;
 
@@ -45,7 +46,7 @@ public class ContactsRepository {
     }
 
 
-    public void add(final Contact contact) throws Exception {
+    public void add(final ContactDetails contact) {
         api.add(contact);
     }
 

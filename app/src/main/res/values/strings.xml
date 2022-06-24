@@ -25,4 +25,7 @@
     <string name="errContactUsernameIsUsername">\?No friends?</string>
     <string name="errEmptyContactNickname">Please enter a nickname</string>
     <string name="emptyServerErr">\"Choose a server, maybe \"</string>
+    <string name="errEmptyUsername">Please provide a username</string>
+    <string name="errInvalidPassword">Password must be non empty and contain a character and a letter!</string>
+    <string name="errPassConfirm">This field must be the same as your password!</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.example.ex3.activities;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -30,6 +31,7 @@ public class AddContactActivity extends AppCompatActivity {
 
         Button btnSaveNewContact = findViewById(R.id.btnSaveNewContact);
         btnSaveNewContact.setOnClickListener(view -> {
+            boolean error = false;
 
             String username = usernameContact.getEditableText().toString();
             String nickname = nicknameContact.getEditableText().toString();
@@ -37,26 +39,34 @@ public class AddContactActivity extends AppCompatActivity {
 
             // client side validations:
             if (username.isEmpty()) {
+                error = true;
                 tvErrUsername.setText(R.string.errEmptyContactUsername);
             } else if (username.equals(App.USERNAME)) {
+                error = true;
                 tvErrUsername.setText(R.string.errContactUsernameIsUsername);
             } else {
                 tvErrUsername.setText("");
             }
 
             if (nickname.isEmpty()) {
+                error = true;
                 tvErrNickname.setText(R.string.errEmptyContactNickname);
             } else {
                 tvErrNickname.setText("");
             }
 
             if (server.isEmpty()) {
+                error = true;
                 tvErrServer.setText(getString(R.string.emptyServerErr) + " " + getString(R.string.BaseUrl));
             } else {
                 tvErrServer.setText("");
             }
 
-            new ContactDetails(username, nickname, server);
+            if (!error) {
+                startActivity(new Intent(this, ChatsSelector.class)
+                        .putExtra("contactToAdd",
+                                new ContactDetails(username, nickname, server)));
+            }
         });
     }
 }

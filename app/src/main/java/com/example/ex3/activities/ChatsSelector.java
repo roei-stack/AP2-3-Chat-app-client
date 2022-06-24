@@ -14,6 +14,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.ex3.R;
 import com.example.ex3.adapters.ContactsListAdapter;
 import com.example.ex3.entities.Contact;
+import com.example.ex3.entities.ContactDetails;
 import com.example.ex3.room.AppDB;
 import com.example.ex3.room.ContactDao;
 import com.example.ex3.viewmodels.ContactsViewModel;
@@ -39,6 +40,10 @@ public class ChatsSelector extends AppCompatActivity {
 
         viewModel = new ViewModelProvider(this).get(ContactsViewModel.class);
 
+        if (getIntent().getExtras() != null) {
+            viewModel.add((ContactDetails) getIntent().getExtras().get("contactToAdd"));
+        }
+
         listContactsView = findViewById(R.id.listContacts);
         adapter = new ContactsListAdapter(this);
         listContactsView.setAdapter(adapter);
@@ -58,9 +63,8 @@ public class ChatsSelector extends AppCompatActivity {
         floatingActionButtonAdd.setOnClickListener(view ->
             startActivity(new Intent(this, AddContactActivity.class))
         );
-
-
     }
+
 
     @SuppressLint("NotifyDataSetChanged")
     @Override

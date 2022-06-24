@@ -1,6 +1,7 @@
 package com.example.ex3.api;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
@@ -43,6 +44,13 @@ public class ContactAPI {
         call.enqueue(new Callback<List<Contact>>() {
            @Override
            public void onResponse(@NonNull Call<List<Contact>> call, @NonNull Response<List<Contact>> response) {
+               if (!response.isSuccessful()) {
+                   Toast.makeText(App.CONTEXT, "The server could not find this user"
+                                   , Toast.LENGTH_LONG).show();
+                   try { Thread.sleep(1000); } catch (InterruptedException ignored) {}
+                   System.exit(0);
+                   return;
+               }
                //contacts.setValue(response.body());
                new Thread(() -> {
                    dao.clear();
@@ -54,38 +62,48 @@ public class ContactAPI {
            @Override
             public void onFailure(@NonNull Call<List<Contact>> call, @NonNull Throwable t) {
                Log.e("Fetch failed", t.toString());
+               Toast.makeText(App.CONTEXT, "Server timed out "
+                       , Toast.LENGTH_LONG).show();
            }
         });
     }
 
 
-    public void add(Contact contact) {
+    public void add(ContactDetails contact) {
         if (dao.get(contact.getId()) != null) {
+            Toast.makeText(App.CONTEXT, "This contact already exists", Toast.LENGTH_LONG)
+                    .show();
             return;
         }
 
         if (contact.getServer().equals(App.CONTEXT.getString(R.string.BaseUrl))) {
             contact.setServer(App.CONTEXT.getString(R.string.BaseLocalUrl));
         }
-        Call<Void> call = webServiceAPI.createContact(username, new ContactDetails(
-                contact.getId(), contact.getName(), contact.getServer()
-        ));
-
+        Call<Void> call = webServiceAPI.createContact(username, contact);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
                 if (!response.isSuccessful()) {
+                    Toast.makeText(App.CONTEXT,
+                                "Operation failed, make sure the server is valid",
+                                Toast.LENGTH_LONG)
+                        .show();
                     return;
                 }
                 new Thread(() -> {
-                    dao.insert(contact);
+                    dao.insert(new Contact(contact.getId(), contact.getName(), contact.getServer(),
+                            null, null));
                     contactListData.postValue(dao.index());
+                    Toast.makeText(App.CONTEXT, "Contact added successfully"
+                                    , Toast.LENGTH_SHORT).show();
                 }).start();
             }
 
             @Override
             public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
                 // a common reason for timeouts is that the user has given an invalid server
+                Toast.makeText(App.CONTEXT, "Connection timeout, request failed",
+                                Toast.LENGTH_LONG).show();
                 Log.e("Fetch failed", t.toString());
             }
         });

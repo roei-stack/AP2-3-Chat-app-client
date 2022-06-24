@@ -2,7 +2,9 @@ package com.example.ex3.entities;
 
 import androidx.annotation.NonNull;
 
-public class ContactDetails {
+import java.io.Serializable;
+
+public class ContactDetails implements Serializable {
     private String id;
 
     private String name;
