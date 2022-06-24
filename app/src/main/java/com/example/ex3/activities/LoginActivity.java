@@ -23,6 +23,8 @@ public class LoginActivity extends AppCompatActivity {
         // setup login process
         Button btn_login = findViewById(R.id.btn_login);
         btn_login.setOnClickListener(view -> {
+            // client side validations
+
             // ...validations...
             Intent intent = new Intent(this, ChatsSelector.class);
             App.USERNAME = "bob";
