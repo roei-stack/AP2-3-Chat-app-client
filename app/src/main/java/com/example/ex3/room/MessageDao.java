@@ -28,9 +28,12 @@ public interface MessageDao {
     @Delete
     void delete(Message... messages);
 
-    @Query("DELETE FROM message WHERE id = :id")
-    void clearAllFromContact(String id);
+    @Query("DELETE FROM message WHERE contactId = :contactId")
+    void clearAllFromContact(String contactId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertList(List<Message> messages);
+
+    @Query("SELECT * FROM message WHERE contactId = :contactId")
+    List<Message> IndexFromContact(String contactId);
 }

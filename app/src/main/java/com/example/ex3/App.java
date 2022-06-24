@@ -16,6 +16,7 @@ public class App extends Application {
     public static AppDB DB;
     public static String USERNAME;
     public static MutableLiveData<Contact> ACTIVE_CONTACT = new MutableLiveData<>();
+    public static boolean isInChat = false;
 
     @Override
     public void onCreate() {

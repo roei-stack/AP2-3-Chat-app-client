@@ -12,7 +12,7 @@ import java.util.Objects;
 @Entity
 public class Message {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int id;
 
     private String content;

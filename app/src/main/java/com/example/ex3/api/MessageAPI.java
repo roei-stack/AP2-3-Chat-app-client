@@ -15,6 +15,7 @@ import com.example.ex3.room.MessageDao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -59,7 +60,7 @@ public class MessageAPI {
                     }
                     dao.clearAllFromContact(c.getId());
                     dao.insertList(messages);
-                    messageListData.postValue(dao.index());
+                    messageListData.postValue(dao.IndexFromContact(c.getId()));
                 }).start();
             }
 
@@ -77,14 +78,33 @@ public class MessageAPI {
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
-                if (!response.isSuccessful()) {
-
+                if (response.code() == 404) {
+                    Toast.makeText(App.CONTEXT, "Error! user/contact not found", Toast.LENGTH_LONG)
+                            .show();
+                    return;
                 }
+                if (response.code() == 304) {
+                    Toast.makeText(App.CONTEXT, "Error! could not transfer message to contact", Toast.LENGTH_LONG)
+                            .show();
+                    return;
+                }
+                if (!response.isSuccessful()) {
+                    Toast.makeText(App.CONTEXT, "Unknown error occurred", Toast.LENGTH_LONG)
+                            .show();
+                    return;
+                }
+                new Thread(() -> {
+                    dao.insert(m);
+                    String cid = Objects.requireNonNull(App.ACTIVE_CONTACT.getValue()).getId();
+                    messageListData.postValue(dao.IndexFromContact(cid));
+                }).start();
             }
 
             @Override
             public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
-
+                Toast.makeText(App.CONTEXT, "Connection timeout, request failed",
+                        Toast.LENGTH_LONG).show();
+                Log.e("Fetch failed", t.toString());
             }
         });
     }

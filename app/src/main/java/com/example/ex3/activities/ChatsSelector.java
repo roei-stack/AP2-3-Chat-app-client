@@ -32,6 +32,8 @@ public class ChatsSelector extends AppCompatActivity {
     private RecyclerView listContactsView;
     private ContactsViewModel viewModel;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +41,14 @@ public class ChatsSelector extends AppCompatActivity {
 
         viewModel = new ViewModelProvider(this).get(ContactsViewModel.class);
 
-        App.ACTIVE_CONTACT.observe(this, this::goToChat);
+        App.ACTIVE_CONTACT.observe(this, contact -> {
+            if (App.isInChat || contact == null) {
+                return;
+            }
+            App.isInChat = true;
+            App.ACTIVE_CONTACT.setValue(contact);
+            startActivity(new Intent(this, MessageListActivity.class).putExtra("contact", contact));
+        });
 
         if (getIntent().getExtras() != null) {
             viewModel.add((ContactDetails) getIntent().getExtras().get("contactToAdd"));
@@ -66,11 +75,7 @@ public class ChatsSelector extends AppCompatActivity {
         );
     }
 
-    private void goToChat(Contact contact) {
-        startActivity(new Intent(this, MessageListActivity.class)
-                .putExtra("contact", contact)
-        );
-    }
+
 }
 
 // don't remove this comment

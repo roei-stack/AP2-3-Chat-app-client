@@ -100,7 +100,7 @@ public class ContactAPI {
             @Override
             public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
                 // a common reason for timeouts is that the user has given an invalid server
-                Toast.makeText(App.CONTEXT, "Connection timeout, request failed",
+                Toast.makeText(App.CONTEXT, "Connection timeout, request failed, check the server",
                                 Toast.LENGTH_LONG).show();
                 Log.e("Fetch failed", t.toString());
             }
