@@ -32,11 +32,8 @@ public interface WebServiceAPI {
     Call<Void> loginUser(@Body UserDetails userDetails);
 
     @GET("api/contacts/{id}/messages")
-    Call<List<MessageDetails>> getMessages(@Query("username") String username,
-                                           @Path("id") String id);
+    Call<List<MessageDetails>> getMessages(@Path("id") String id, @Query("username") String username);
 
     @POST("api/contacts/{id}/messages")
-    Call<Void> postMessage(@Query("username") String username
-            , @Path("id") String id
-            , @Body String data);
+    Call<Void> postMessage(@Path("id") String id, @Query("username") String username, @Body String data);
 }

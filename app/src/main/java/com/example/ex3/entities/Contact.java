@@ -46,8 +46,7 @@ public class Contact implements Serializable {
             this.lastdate = "";
             e.printStackTrace();
         }
-
-    //    this.image = image;
+        //    this.image = image;
     }
 
     @NonNull

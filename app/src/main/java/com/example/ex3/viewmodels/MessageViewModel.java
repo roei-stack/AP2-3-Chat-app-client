@@ -1,13 +1,14 @@
 package com.example.ex3.viewmodels;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.example.ex3.entities.Message;
 import com.example.ex3.repositories.MessagesRepository;
 
 import java.util.List;
 
-public class MessageViewModel {
+public class MessageViewModel extends ViewModel {
 
     private final MessagesRepository repository;
 

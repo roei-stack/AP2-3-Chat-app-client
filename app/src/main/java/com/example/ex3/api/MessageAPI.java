@@ -27,10 +27,12 @@ public class MessageAPI {
     private MessageDao dao;
     Retrofit retrofit;
     WebServiceAPI webServiceAPI;
+    String username;
 
     public MessageAPI(MutableLiveData<List<Message>> messageListData, MessageDao dao) {
         this.messageListData = messageListData;
         this.dao = dao;
+        this.username = App.USERNAME;
         retrofit = new Retrofit.Builder()
                 .baseUrl(App.CONTEXT.getString(R.string.BaseUrl))
                 .addConverterFactory(GsonConverterFactory.create())
@@ -39,7 +41,7 @@ public class MessageAPI {
     }
 
     public void get(Contact c) {
-        Call<List<MessageDetails>> call = webServiceAPI.getMessages("bob", c.getId());
+        Call<List<MessageDetails>> call = webServiceAPI.getMessages(c.getId(), username);
         call.enqueue(new Callback<List<MessageDetails>>() {
             @Override
             public void onResponse(@NonNull Call<List<MessageDetails>> call, @NonNull Response<List<MessageDetails>> response) {
@@ -71,6 +73,19 @@ public class MessageAPI {
     }
 
     public void add(Message m) {
+        Call<Void> call = webServiceAPI.postMessage(m.getContactId(), username, m.getContent());
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                if (!response.isSuccessful()) {
 
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+
+            }
+        });
     }
 }
