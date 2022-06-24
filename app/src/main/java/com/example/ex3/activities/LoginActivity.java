@@ -14,7 +14,10 @@ import com.example.ex3.App;
 import com.example.ex3.R;
 import com.example.ex3.api.WebServiceAPI;
 import com.example.ex3.entities.UserDetails;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -69,6 +72,19 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
                 App.USERNAME = userDetails.getUsername();
+
+                // send token to the server
+                final boolean[] isSentToServer = {false};
+                FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(LoginActivity.this, new OnSuccessListener<InstanceIdResult>() {
+                    @Override
+                    public void onSuccess(InstanceIdResult instanceIdResult) {
+                        String newToken = instanceIdResult.getToken();
+                        if (!isSentToServer[0]) {
+                            // ***** send newToken to the sever *****
+                        }
+                        isSentToServer[0] = true;
+                    }
+                });
                 goToChatSelector();
             }
 
