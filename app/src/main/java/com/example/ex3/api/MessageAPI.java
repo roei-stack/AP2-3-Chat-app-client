@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.ex3.App;
-import com.example.ex3.R;
 import com.example.ex3.entities.Contact;
 import com.example.ex3.entities.Message;
 import com.example.ex3.entities.MessageDetails;
@@ -24,8 +23,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MessageAPI {
-    private MutableLiveData<List<Message>> messageListData;
-    private MessageDao dao;
+    private final MutableLiveData<List<Message>> messageListData;
+    private final MessageDao dao;
     Retrofit retrofit;
     WebServiceAPI webServiceAPI;
     String username;
@@ -35,7 +34,7 @@ public class MessageAPI {
         this.dao = dao;
         this.username = App.USERNAME;
         retrofit = new Retrofit.Builder()
-                .baseUrl(App.CONTEXT.getString(R.string.BaseUrl))
+                .baseUrl(App.API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         webServiceAPI = retrofit.create(WebServiceAPI.class);

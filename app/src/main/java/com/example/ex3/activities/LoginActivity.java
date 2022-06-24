@@ -27,6 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView tvErrLoginUsername;
     private TextView tvErrLoginPassword;
     WebServiceAPI webServiceAPI;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // setup login process
         webServiceAPI = new Retrofit.Builder()
-                .baseUrl(App.CONTEXT.getString(R.string.BaseUrl))
+                .baseUrl(App.API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build().create(WebServiceAPI.class);
         findViewById(R.id.btn_login).setOnClickListener(view -> {
@@ -102,7 +103,6 @@ public class LoginActivity extends AppCompatActivity {
         }
         return !error;
     }
-
 
     private void goToRegister(View view) {
         startActivity(new Intent(this, RegisterActivity.class));

@@ -21,8 +21,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ContactAPI {
-    private MutableLiveData<List<Contact>> contactListData;
-    private ContactDao dao;
+    private final MutableLiveData<List<Contact>> contactListData;
+    private final ContactDao dao;
     Retrofit retrofit;
     WebServiceAPI webServiceAPI;
     String username;
@@ -32,7 +32,7 @@ public class ContactAPI {
         this.dao = dao;
         this.username = App.USERNAME;
         retrofit = new Retrofit.Builder()
-                .baseUrl(App.CONTEXT.getString(R.string.BaseUrl))
+                .baseUrl(App.API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -47,7 +47,7 @@ public class ContactAPI {
                /*
                if (!response.isSuccessful()) {
                    Toast.makeText(App.CONTEXT, "The server could not find this user"
-                                   , Toast.LENGTH_LONG).show();
+                                   , Toast.LENGTH_LONG).show()
                    System.exit(0);
                    return;
                }*/
@@ -67,7 +67,6 @@ public class ContactAPI {
            }
         });
     }
-
 
     public void add(ContactDetails contact) {
         if (dao.get(contact.getId()) != null) {

@@ -14,9 +14,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class MessagesRepository {
-    private MessageDao dao;
-    private MessageListData messageListData;
-    private MessageAPI api;
+    private final MessageDao dao;
+    private final MessageListData messageListData;
+    private final MessageAPI api;
 
     public MessagesRepository() {
         AppDB db = App.DB;
@@ -46,13 +46,12 @@ public class MessagesRepository {
         return messageListData;
     }
 
-
     public void add(final Message m) {
         api.add(m);
     }
 
     /*public void delete(final Message m) {
-        api.delete(m);
+        api.delete(m)
     }*/
 
     public void reload() {

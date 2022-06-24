@@ -57,7 +57,7 @@ public class AddContactActivity extends AppCompatActivity {
 
             if (server.isEmpty()) {
                 error = true;
-                tvErrServer.setText(getString(R.string.emptyServerErr) + " " + getString(R.string.BaseUrl));
+                tvErrServer.setText(getString(R.string.emptyServerErr) + " " + App.API_URL);
             } else {
                 tvErrServer.setText("");
             }

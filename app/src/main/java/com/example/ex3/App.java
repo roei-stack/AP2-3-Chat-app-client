@@ -3,6 +3,7 @@ package com.example.ex3;
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.room.Room;
@@ -17,6 +18,7 @@ public class App extends Application {
     public static String USERNAME;
     public static MutableLiveData<Contact> ACTIVE_CONTACT = new MutableLiveData<>();
     public static boolean isInChat = false;
+    public static String API_URL;
 
     @Override
     public void onCreate() {
@@ -26,5 +28,11 @@ public class App extends Application {
         DB = Room.databaseBuilder(getApplicationContext(), AppDB.class, "LocalDB")
                 .allowMainThreadQueries()
                 .build();
+
+        API_URL = getString(R.string.BaseUrl);
+        SharedPreferences settings = getSharedPreferences("info", 0);
+        if (!settings.getString("apiAddress", "").isEmpty()) {
+            API_URL = settings.getString("apiAddress", "");
+        }
     }
 }

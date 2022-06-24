@@ -1,6 +1,8 @@
 package com.example.ex3.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -31,6 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextView tvErrRegisterUsername;
     private TextView tvErrRegisterPassword;
     private TextView tvErrRegisterPasswordConfirm;
+    private Uri profilePic;
     Button btn_register;
 
     @Override
@@ -45,7 +48,10 @@ public class RegisterActivity extends AppCompatActivity {
         ImageView user_image = findViewById(R.id.user_image);
         Button btn_upload_image = findViewById(R.id.btn_upload_image);
         ActivityResultLauncher<String> imageLauncher = registerForActivityResult(
-                new ActivityResultContracts.GetContent(), user_image::setImageURI
+                new ActivityResultContracts.GetContent(), result -> {
+                    user_image.setImageURI(result);
+                    profilePic = result;
+                }
         );
         btn_upload_image.setOnClickListener(v -> imageLauncher.launch("image/*"));
 
@@ -59,7 +65,7 @@ public class RegisterActivity extends AppCompatActivity {
         tvErrRegisterPasswordConfirm = findViewById(R.id.tvErrRegisterPasswordConfirm);
 
         webServiceAPI = new Retrofit.Builder()
-                .baseUrl(App.CONTEXT.getString(R.string.BaseUrl))
+                .baseUrl(App.API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build().create(WebServiceAPI.class);
 
@@ -74,14 +80,13 @@ public class RegisterActivity extends AppCompatActivity {
                 nick = username;
             }
 
-            if (clientSideValidations(username, nick, password, password_conf)) {
-                attemptRegister(v, new UserDetails(username, password, nick));
+            if (clientSideValidations(username, password, password_conf)) {
+                attemptRegister(v, new UserDetails(username, password, nick), profilePic);
             }
         });
     }
 
-    private boolean clientSideValidations(String username, String nick,
-                                          String password, String password_conf) {
+    private boolean clientSideValidations(String username, String password, String password_conf) {
         boolean error = false;
         if (username.isEmpty()) {
             error = true;
@@ -107,7 +112,7 @@ public class RegisterActivity extends AppCompatActivity {
         return !error;
     }
 
-    private void attemptRegister(View v, UserDetails userDetails) {
+    private void attemptRegister(View v, UserDetails userDetails, Uri profilePic) {
         Call<Void> call = webServiceAPI.registerUser(userDetails);
         call.enqueue(new Callback<Void>() {
             @Override
@@ -117,6 +122,14 @@ public class RegisterActivity extends AppCompatActivity {
                             , Toast.LENGTH_LONG).show();
 
                 } else {
+                    String pic = "";
+                    if (profilePic != null) {
+                        pic = profilePic.toString();
+                    }
+                    // save image
+                    SharedPreferences settings = getSharedPreferences("profilePictures", 0);
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.putString(userDetails.getUsername(), pic).apply();
                     // go to login page
                     goToLogin(v);
                 }
@@ -134,5 +147,4 @@ public class RegisterActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
-
 }

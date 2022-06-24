@@ -5,7 +5,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,12 +19,12 @@ import java.util.List;
 
 public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapter.ContactsViewHolder> {
 
-    class ContactsViewHolder extends RecyclerView.ViewHolder {
+    static class ContactsViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView tvNickname;
         private final TextView tvLastMessage;
         private final TextView tvLastDate;
-        private final ImageView contactImg;
+        //private final ImageView contactImg
         private final LinearLayout topLayout;
 
         public ContactsViewHolder(@NonNull View itemView) {
@@ -33,7 +32,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
             tvNickname = itemView.findViewById(R.id.tvNickname);
             tvLastMessage = itemView.findViewById(R.id.tvLastMessage);
             tvLastDate = itemView.findViewById(R.id.tvLastDate);
-            contactImg = itemView.findViewById(R.id.contactImg);
+            //contactImg = itemView.findViewById(R.id.contactImg)
             topLayout = itemView.findViewById(R.id.topLayout);
         }
     }

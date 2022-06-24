@@ -19,7 +19,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     private final LayoutInflater mInflater;
     private List<Message> mMessageList;
 
-    class MessageViewHolder extends RecyclerView.ViewHolder {
+    static class MessageViewHolder extends RecyclerView.ViewHolder {
         TextView messageText, timeText;
 
         MessageViewHolder(View itemView) {

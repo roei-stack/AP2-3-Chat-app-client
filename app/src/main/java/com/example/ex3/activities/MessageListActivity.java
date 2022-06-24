@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -25,23 +26,24 @@ import java.util.Date;
 import java.util.List;
 
 public class MessageListActivity extends AppCompatActivity {
-    private RecyclerView messageRecycler;
+
     private MessageListAdapter messageAdapter;
-
-    private List<Message> messageList = new ArrayList<>();
-
+    private final List<Message> messageList = new ArrayList<>();
     private MessageViewModel viewModel;
 
-    @SuppressLint("SimpleDateFormat")
+    @SuppressLint({"SimpleDateFormat", "SetTextI18n"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
         Contact contact = (Contact) getIntent().getExtras().get("contact");
+        TextView contactNicknameHeader = findViewById(R.id.contactNicknameHeader);
+        contactNicknameHeader.setText("  " + contact.getName());
+
         viewModel = new ViewModelProvider(this).get(MessageViewModel.class);
 
-        messageRecycler = (RecyclerView) findViewById(R.id.recycler_list_id);
+        RecyclerView messageRecycler = (RecyclerView) findViewById(R.id.recycler_list_id);
         messageAdapter = new MessageListAdapter(this, messageList);
         messageRecycler.setLayoutManager(new LinearLayoutManager(this));
         messageRecycler.setAdapter(messageAdapter);
@@ -75,7 +77,6 @@ public class MessageListActivity extends AppCompatActivity {
             viewModel.add(new Message(0, content, true,
                     new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date()), contact.getId()));
         });
-
     }
 
     @Override
@@ -85,8 +86,3 @@ public class MessageListActivity extends AppCompatActivity {
         App.ACTIVE_CONTACT.setValue(null);
     }
 }
-
-/*messageList.add(new Message(1, "weeeeeeee", true, "time to shine baby", "1"));
-        messageList.add(new Message(1, "come too far", false, "time to shine baby", "1"));
-        messageList.add(new Message(1, "to give up", true, "time to shine baby", "1"));
-        messageList.add(new Message(1, "who we aree", false, "time to shine baby", "1"));*/

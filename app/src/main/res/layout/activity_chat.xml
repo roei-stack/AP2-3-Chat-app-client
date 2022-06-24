@@ -12,18 +12,45 @@
         android:fitsSystemWindows="true"
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent">
-
-
     </com.google.android.material.appbar.AppBarLayout>
+
+
+    <LinearLayout
+        android:id="@+id/layout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/purple_500"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <ImageView
+            android:id="@+id/contactImg"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/profile_img_description"
+            android:maxWidth="50dp"
+            android:src="@drawable/boris_rounded" />
+
+        <TextView
+            android:id="@+id/contactNicknameHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="35sp"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_list_id"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
         app:layout_constrainedHeight="true"
         app:layout_constraintBottom_toTopOf="@+id/text_indicator"
-        app:layout_constraintTop_toBottomOf="@+id/layout_group_chat" />
+        app:layout_constraintTop_toBottomOf="@+id/layout1" />
 
     <TextView
         android:id="@+id/text_indicator"
@@ -48,7 +75,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-
         <EditText
             android:id="@+id/edit_message_box"
             android:layout_width="match_parent"
@@ -69,7 +95,8 @@
             android:layout_alignParentEnd="true"
             app:srcCompat="@android:drawable/ic_menu_send"
             tools:layout_editor_absoluteX="236dp"
-            tools:layout_editor_absoluteY="482dp" />
+            tools:layout_editor_absoluteY="482dp"
+            android:contentDescription="@string/send_btn" />
     </RelativeLayout>
 
 

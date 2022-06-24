@@ -12,7 +12,7 @@ public class MessageViewModel extends ViewModel {
 
     private final MessagesRepository repository;
 
-    private LiveData<List<Message>> messages;
+    private final LiveData<List<Message>> messages;
 
     public MessageViewModel() {
         repository = new MessagesRepository();
@@ -27,8 +27,8 @@ public class MessageViewModel extends ViewModel {
         repository.add(m);
     }
 
-   /* public void delete(Message c) {
-        repository.delete(c);
+    /*public void delete(Message c) {
+        repository.delete(c)
     }*/
 
     public void reload() {

@@ -70,7 +70,7 @@ public class Contact implements Serializable {
         return lastdate;
     }
 
- /*   public String getImage() { return image; }*/
+    //  public String getImage() { return image }
 
     public void setId(@NonNull String id) {
         this.id = id;

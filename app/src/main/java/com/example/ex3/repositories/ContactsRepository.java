@@ -15,9 +15,9 @@ import java.util.List;
 
 public class ContactsRepository {
 
-    private ContactDao dao;
-    private ContactListData contactListData;
-    private ContactAPI api;
+    private final ContactDao dao;
+    private final ContactListData contactListData;
+    private final ContactAPI api;
 
     public ContactsRepository() {
         AppDB db = App.DB;
@@ -50,10 +50,8 @@ public class ContactsRepository {
         api.add(contact);
     }
 
-    /*
-
-    public void delete(final Contact contact) {
-        api.delete(contact);
+    /*public void delete(final Contact contact) {
+        api.delete(contact)
     }*/
 
     public void reload() {

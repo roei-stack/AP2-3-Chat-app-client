@@ -14,7 +14,7 @@ public class ContactsViewModel extends ViewModel implements Serializable {
 
     private final ContactsRepository repository;
 
-    private LiveData<List<Contact>> contacts;
+    private final LiveData<List<Contact>> contacts;
 
     public ContactsViewModel() {
         repository = new ContactsRepository();
