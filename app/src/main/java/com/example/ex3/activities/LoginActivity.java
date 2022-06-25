@@ -73,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
                 App.USERNAME = userDetails.getUsername();
+                App.prefs.edit().putString("connected", userDetails.getUsername()).apply();
 
                 // send token to the server
                 final boolean[] isSentToServer = {false};

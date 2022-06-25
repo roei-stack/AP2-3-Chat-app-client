@@ -19,6 +19,7 @@ public class App extends Application {
     public static MutableLiveData<Contact> ACTIVE_CONTACT = new MutableLiveData<>();
     public static boolean isInChat = false;
     public static String API_URL;
+    public static SharedPreferences prefs;
 
     @Override
     public void onCreate() {
@@ -34,5 +35,14 @@ public class App extends Application {
         if (!settings.getString("apiAddress", "").isEmpty()) {
             API_URL = settings.getString("apiAddress", "");
         }
+
+        prefs = this.getSharedPreferences("com.example.ex3", Context.MODE_PRIVATE);
+        if (!prefs.getString("connected", "").isEmpty()) {
+            USERNAME = prefs.getString("connected", null);
+        }
+    }
+
+    public static String getLastLogin() {
+        return prefs.getString("connected", null);
     }
 }

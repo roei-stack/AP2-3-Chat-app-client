@@ -24,9 +24,12 @@ public class SettingsActivity extends AppCompatActivity {
         etAddress.setText(App.API_URL);
 
         SharedPreferences pictures = getSharedPreferences("profilePictures", 0);
-        if (!pictures.getString(App.USERNAME, "").isEmpty()) {
+        String picture = pictures.getString(App.USERNAME, "");
+        if (!picture.isEmpty()) {
             ImageView contactImg = findViewById(R.id.contactImg);
-            contactImg.setImageURI(Uri.parse(pictures.getString(App.USERNAME, "")));
+            try {
+                contactImg.setImageURI(Uri.parse(picture));
+            } catch (Exception ignored) {}
         }
 
         findViewById(R.id.btnSaveAddress).setOnClickListener(view -> {
