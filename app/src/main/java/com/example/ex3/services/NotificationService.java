@@ -2,6 +2,7 @@ package com.example.ex3.services;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Build;
@@ -12,7 +13,9 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.ex3.R;
+import com.example.ex3.activities.ChatsSelector;
 import com.example.ex3.activities.LoginActivity;
+import com.example.ex3.activities.MessageListActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
@@ -34,13 +37,21 @@ public class NotificationService extends FirebaseMessagingService {
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         if (remoteMessage.getNotification() != null) {
 
+            Intent intent = new Intent(this, ChatsSelector.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this,
+                    99,
+                    intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+
             createNotificationChannel();
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                     .setSmallIcon(R.drawable.ic_action_name)
                     .setContentTitle(remoteMessage.getNotification().getTitle())
                     .setContentText(remoteMessage.getNotification().getBody())
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setContentIntent(pendingIntent)
+                    .setAutoCancel(true);
 
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
             notificationManager.notify(Integer.parseInt(CHANNEL_ID), builder.build());
