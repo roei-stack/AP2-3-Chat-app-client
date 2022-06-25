@@ -36,4 +36,7 @@ public interface WebServiceAPI {
 
     @POST("/api/contacts/{id}/messages")
     Call<Void> postMessage(@Path("id") String id, @Query("username") String username, @Body String data);
+
+    @POST("/api/Users/token")
+    Call<Void> postToken(@Query("username") String username, @Body String token);
 }

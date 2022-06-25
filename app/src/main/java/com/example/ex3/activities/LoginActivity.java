@@ -82,7 +82,31 @@ public class LoginActivity extends AppCompatActivity {
                     public void onSuccess(InstanceIdResult instanceIdResult) {
                         String newToken = instanceIdResult.getToken();
                         if (!isSentToServer[0]) {
-                            // ***** send newToken to the sever *****
+                            WebServiceAPI api = new Retrofit.Builder()
+                                    .baseUrl(App.API_URL)
+                                    .addConverterFactory(GsonConverterFactory.create())
+                                    .build().create(WebServiceAPI.class);
+
+                            Call<Void> call = api.postToken(App.USERNAME, newToken);
+                            call.enqueue(new Callback<Void>() {
+                                @Override
+                                public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                                    if (response.code() == 400) {
+                                        Toast.makeText(App.CONTEXT, "400 bad request"
+                                                , Toast.LENGTH_LONG).show();
+                                    }
+                                    if (response.code() == 404) {
+                                        Toast.makeText(App.CONTEXT, "404 user not found"
+                                                , Toast.LENGTH_LONG).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                                    Toast.makeText(App.CONTEXT, "Server connection error"
+                                            , Toast.LENGTH_LONG).show();
+                                }
+                            });
                         }
                         isSentToServer[0] = true;
                     }
