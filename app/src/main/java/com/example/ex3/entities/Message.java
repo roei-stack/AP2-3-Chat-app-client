@@ -30,7 +30,7 @@ public class Message {
         this.sent = sent;
         this.contactId = contactId;
         try {
-            this.created = new SimpleDateFormat("dd/MM/yyyy hh:mm")
+            this.created = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss")
                     .format(Objects.requireNonNull(
                             new SimpleDateFormat(
                                     "yyyy-MM-dd hh:mm:ss"

@@ -32,7 +32,9 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
             messageText.setText(message.getContent());
 
             // Format the stored timestamp into a readable String using method.
-            timeText.setText(message.getCreated());
+            timeText.setText(message.getCreated().substring(0, message.getCreated().length() - 3));
+
+
             messageText.setText(message.getContent());
         }
     }
