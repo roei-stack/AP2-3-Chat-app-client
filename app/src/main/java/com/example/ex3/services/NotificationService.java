@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.example.ex3.App;
 import com.example.ex3.R;
 import com.example.ex3.activities.ChatsSelector;
 import com.example.ex3.activities.LoginActivity;
@@ -21,6 +22,8 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+
+import java.util.Objects;
 
 public class NotificationService extends FirebaseMessagingService {
     public NotificationService() {
@@ -36,6 +39,10 @@ public class NotificationService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         if (remoteMessage.getNotification() != null) {
+
+            if (Objects.equals(remoteMessage.getNotification().getTitle(), App.getLastLogin())) {
+                return;
+            }
 
             Intent intent = new Intent(this, ChatsSelector.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(this,
