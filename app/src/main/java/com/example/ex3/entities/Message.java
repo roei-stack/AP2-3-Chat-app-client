@@ -30,10 +30,10 @@ public class Message {
         this.sent = sent;
         this.contactId = contactId;
         try {
-            this.created = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss")
+            this.created = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
                     .format(Objects.requireNonNull(
                             new SimpleDateFormat(
-                                    "yyyy-MM-dd hh:mm:ss"
+                                    "yyyy-MM-dd HH:mm:ss"
                             ).parse(created.substring(0, 10) + ' ' + created.substring(11))));
         } catch (Exception e) {
             // i have no idea why,

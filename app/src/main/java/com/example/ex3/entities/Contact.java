@@ -36,9 +36,9 @@ public class Contact implements Serializable {
         this.server = server;
         this.last = last;
         try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             Date date = Objects.requireNonNull(
-                    new SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
+                    new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
                     .parse(lastdate.substring(0, 10) + ' '
                             + lastdate.substring(11)));
             this.lastdate = dateFormat.format(date);

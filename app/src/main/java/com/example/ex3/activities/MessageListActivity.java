@@ -50,7 +50,7 @@ public class MessageListActivity extends AppCompatActivity {
 
         viewModel.get().observe(this, messages -> {
             Collections.sort(messages, (m1, m2) -> {
-                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 try {
                     Date d1 = dateFormat.parse(m1.getCreated());
                     Date d2 = dateFormat.parse(m2.getCreated());
@@ -75,7 +75,7 @@ public class MessageListActivity extends AppCompatActivity {
             edit_message_box.setText("");
 
             viewModel.add(new Message(0, content, true,
-                    new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date()), contact.getId()));
+                    new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date()), contact.getId()));
         });
     }
 
