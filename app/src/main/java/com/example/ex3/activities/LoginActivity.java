@@ -14,10 +14,8 @@ import com.example.ex3.App;
 import com.example.ex3.R;
 import com.example.ex3.api.WebServiceAPI;
 import com.example.ex3.entities.UserDetails;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -77,39 +75,36 @@ public class LoginActivity extends AppCompatActivity {
 
                 // send token to the server
                 final boolean[] isSentToServer = {false};
-                FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(LoginActivity.this, new OnSuccessListener<InstanceIdResult>() {
-                    @Override
-                    public void onSuccess(InstanceIdResult instanceIdResult) {
-                        String newToken = instanceIdResult.getToken();
-                        if (!isSentToServer[0]) {
-                            WebServiceAPI api = new Retrofit.Builder()
-                                    .baseUrl(App.API_URL)
-                                    .addConverterFactory(GsonConverterFactory.create())
-                                    .build().create(WebServiceAPI.class);
+                FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(LoginActivity.this, instanceIdResult -> {
+                    String newToken = instanceIdResult.getToken();
+                    if (!isSentToServer[0]) {
+                        WebServiceAPI api = new Retrofit.Builder()
+                                .baseUrl(App.API_URL)
+                                .addConverterFactory(GsonConverterFactory.create())
+                                .build().create(WebServiceAPI.class);
 
-                            Call<Void> call = api.postToken(App.USERNAME, newToken);
-                            call.enqueue(new Callback<Void>() {
-                                @Override
-                                public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
-                                    if (response.code() == 400) {
-                                        Toast.makeText(App.CONTEXT, "400 bad request"
-                                                , Toast.LENGTH_LONG).show();
-                                    }
-                                    if (response.code() == 404) {
-                                        Toast.makeText(App.CONTEXT, "404 user not found"
-                                                , Toast.LENGTH_LONG).show();
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
-                                    Toast.makeText(App.CONTEXT, "Server connection error"
+                        Call<Void> call1 = api.postToken(App.USERNAME, newToken);
+                        call1.enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(@NonNull Call<Void> call1, @NonNull Response<Void> response1) {
+                                if (response1.code() == 400) {
+                                    Toast.makeText(App.CONTEXT, "400 bad request"
                                             , Toast.LENGTH_LONG).show();
                                 }
-                            });
-                        }
-                        isSentToServer[0] = true;
+                                if (response1.code() == 404) {
+                                    Toast.makeText(App.CONTEXT, "404 user not found"
+                                            , Toast.LENGTH_LONG).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(@NonNull Call<Void> call1, @NonNull Throwable t) {
+                                Toast.makeText(App.CONTEXT, "Server connection error"
+                                        , Toast.LENGTH_LONG).show();
+                            }
+                        });
                     }
+                    isSentToServer[0] = true;
                 });
                 goToChatSelector();
             }
